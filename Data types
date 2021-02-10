@@ -1,0 +1,21 @@
+library(dslabs)
+data("murders")
+class(murders)
+str(murders) # str : strcuture"
+head(murders) # show the first 6 rows in data
+murders$population # $ is sccrssor
+names(murders)# get the column names
+
+# numeric vector(number) /vs/ character vector(字符串) /vs/ ligical vector(true or false) /vs/ factor
+pop <- murders$population
+length(pop)
+class(pop)
+
+class(murders$state)
+
+z <- 3 == 2 # == is a relational operator(关系运算符)
+z
+class(z)
+
+#factor are useful for storing categorical data(分类变量)
+levels(murders$region)
