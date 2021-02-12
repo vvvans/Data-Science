@@ -1,0 +1,31 @@
+install.packages("dplyr")
+library(dplyr)
+
+# adding a column with mutate
+library(dslabs)
+data("murders")
+murders <- mutate(murders, rate = total / population * 100000)
+
+# subsetting with filter
+filter(murders, rate <= 0.71)
+
+#满足一个条件
+no_south <- filter(murders,region != "South")
+murders_nw <- filter(murders, region %in% c("Northeast" , "West"))
+
+#两个条件同时满足
+my_states <- filter(murders,region %in% c("Northeast","West") & rate < 1)
+
+# selecting columns with select
+new_table <- select(murders, state, region, rate)
+
+# using the pipe operator
+murders %>% select(state, region, rate) %>% filter(rate <= 0.71)
+
+# creating a data frame with stringAsFactors = FALSE
+grades <- data.frame(names = c("John", "Juan", "Jean", "Yao"), 
+                     exam_1 = c(95, 80, 90, 85), 
+                     exam_2 = c(90, 85, 85, 90),
+                     stringsAsFactors = FALSE) # let names becomes a character
+grades
+class(grades$names)
