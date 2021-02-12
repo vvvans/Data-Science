@@ -1,0 +1,37 @@
+#"names" function
+codes <- c(380, 124, 818)
+country <- c("italy","canada","egypt")
+names(codes) <- country
+codes
+
+#numeric and integer
+class(seq(1,3,0.5))#numeric
+class(seq(1L,3L))#integer
+class(3L/1L)#integer
+
+
+# SORT vs ORDER vs RANK ---------------------------------------------------
+
+# "sort" function
+library(dslabs)
+data(murders)
+sort(murders$total)
+
+#"order" function:显示的是sort后的数据在原数据中的位置，生成原数据从小到大的index，而不是原数据
+x <- c(31, 4, 15, 92, 65)
+index <- order(x) 
+order(x)  #返回index值，最小的4在x中的第二个，15在x中的第三个，31在x中的第一个， 65在x中的第五个， 92 在x中的第四个，所以是（2，3，1，5，4）
+x[index]
+
+index <- order(murders$total)
+murders$state[index]
+
+#"max" function
+max(murders$total)
+i_max <- which.max(murders$total)
+murders$state[i_max]
+
+#"rank" function： 对original数据按从小到大排列
+x <- c(31, 4, 15, 92, 65)
+x
+rank(x) # returns ranks (smallest to largest)
