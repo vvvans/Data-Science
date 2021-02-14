@@ -1,0 +1,52 @@
+# define x as vector of male heights
+install.packages("tidyvise")
+library(tidyverse)
+library(dslabs)
+data(heights)
+index <- heights$sex=="Male"
+x <- heights$height[index]
+
+# calculate the mean and standard deviation manually
+average <- sum(x)/length(x)
+SD <- sqrt(sum((x - average)^2)/length(x))
+
+# built-in mean and sd functions - note that the audio and printed values disagree
+average <- mean(x)
+SD <- sd(x)
+c(average = average, SD = SD)
+
+# calculate standard units( z = (x -mean(x))/std(x) ~ N(0,1))
+z <- scale(x) #x 分布在[-2,2]之间的概率约为95.5%，分布在[-1,1]之间的概率约为68.2%， 分布在[-3,3]之间的概率约为99.7%
+
+# calculate proportion of values within 2 SD of mean (x +/- 2)
+mean(abs(z) < 2) # 95%
+
+
+# pnorm() -----------------------------------------------------------------
+#F(a) = pnorm(a,avg,s)
+
+library(tidyverse)
+library(dslabs)
+library(dplyr)
+data(heights)
+x <- heights %>% filter(sex=="Male") %>% pull(height)
+#We can estimate the probability that a male is taller than 70.5 inches with:
+1 - pnorm(70.5, mean(x), sd(x))
+# plot distribution of exact heights in data
+plot(prop.table(table(x)), xlab = "a = Height in inches", ylab = "Pr(x = a)")
+
+#实际数据计算的区间概率（相同区间概率相差较大）
+# probabilities in *actual data* over length 1 ranges containing an integer
+mean(x <= 68.5) - mean(x <= 67.5)
+mean(x <= 69.5) - mean(x <= 68.5)
+mean(x <= 70.5) - mean(x <= 69.5)
+#正态分布拟合的数据计算的区间概率（相同间隔之间的概率十分接近）
+# probabilities in *normal approximation* match well
+pnorm(68.5, mean(x), sd(x)) - pnorm(67.5, mean(x), sd(x))
+pnorm(69.5, mean(x), sd(x)) - pnorm(68.5, mean(x), sd(x))
+pnorm(70.5, mean(x), sd(x)) - pnorm(69.5, mean(x), sd(x))
+
+#为何如此多的变量都大致服从正态分布？中心极限定理：当在大量随机变量上重复很多次实验时，它们的分布总和将非常接近正态分布。
+# probabilities in actual data over other ranges don't match normal approx as well（discritization(离散化)较严重，导致实际数据与正态估计区间概率相差较大）
+mean(x <= 70.9) - mean(x <= 70.1)
+pnorm(70.9, mean(x), sd(x)) - pnorm(70.1, mean(x), sd(x))
