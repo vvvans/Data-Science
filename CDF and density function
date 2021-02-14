@@ -1,0 +1,21 @@
+# load the dataset
+library(dslabs)
+data(heights)
+head(heights)
+
+# make a table of category proportions
+prop.table(table(heights$sex))
+#barplot
+# CDF(cumulative distribution function)
+# F(a) = P(x <= a)
+a <- seq(min(heights$height), max(heights$height), length = 100)    # define range of values spanning the dataset
+cdf_function <- function(x) {    # computes prob. for a single value
+  mean(heights$height <= x)
+}
+cdf_values <- sapply(a, cdf_function)
+
+plot(a, cdf_values)
+
+#histogram(much easier to explain data)
+
+#smooth density plot(when we make the bins become smaller and smaller, we can see the edge start disappearing and the histogram become smoother)
