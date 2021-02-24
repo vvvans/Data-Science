@@ -1,0 +1,30 @@
+# Quantile ----------------------------------------------------------------
+
+#Given a dataset data and desired quantile q, you can find the qth quantile of data
+quantile(data,q)
+#percentile
+p <- seq(0.01, 0.99, 0.01)
+quantile(data, p)
+
+library(dslabs)
+data(heights)
+
+#summary function
+summary(heights$height)
+
+p <- seq(0.01, 0.99, 0.01)
+percentiles <- quantile(heights$height, p)
+
+percentiles[names(percentiles) == "25%"]
+percentiles[names(percentiles) == "75%"]
+
+#Definition of qnorm
+#The qnorm() function gives the *theoretical value* of a quantile with probability p of observing a value equal to or less than that quantile value given a normal distribution with mean mu and standard deviation sigma:
+#qnorm(p, mu, sigma)
+#qnorm(p) = qnorm(p,0,1)
+#pnorm(z) 等价于p（ x <= z ），即z左侧的阴影面积
+#qnorm() 给定左侧阴影面积，返回对应的x轴的值
+#pnorm() 与 qnorm()互为反函数
+qnorm(0.025)
+pnorm(-1.96)
+pnorm(qnorm(0.025))
